@@ -30,10 +30,14 @@ class MainActivity : AppCompatActivity() {
 
 
     fun InputOperator(view: View) {
+        if (selectedOperator.isNotEmpty() && firstNumber.isNotEmpty() && secondNumber.isNotEmpty()) {
+            Hitung(view) // Hitung hasil sebelumnya
+        }
         val operator = (view as Button).text.toString()
         selectedOperator = operator
         findViewById<TextView>(R.id.operasi).text = operator
     }
+
 
     fun Hitung(view: View) {
         if (firstNumber.isNotEmpty() && secondNumber.isNotEmpty() && selectedOperator.isNotEmpty()) {
@@ -49,13 +53,18 @@ class MainActivity : AppCompatActivity() {
             }
 
             findViewById<TextView>(R.id.angka).text = result.toString()
-            // Reset number dan operator setelah perhitungan
             firstNumber = result.toString()
             secondNumber = ""
             selectedOperator = ""
-            findViewById<TextView>(R.id.operasi).text = ""
+
+            if (view.id == R.id.btn_hasil) {
+                findViewById<TextView>(R.id.operasi).text = ""
+            } else {
+                findViewById<TextView>(R.id.operasi).text = (view as Button).text
+            }
         }
     }
+
 
     fun Clear(view: View) {
         firstNumber = ""
